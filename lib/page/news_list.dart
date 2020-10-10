@@ -38,8 +38,7 @@ class NewsListProvider {
         children: [
           FadeInImage.assetNetwork(
             image: item.imageUrl,
-            // placeholder: 'assets/news_place_holder.png',
-            placeholder: 'assets/loading.gif',
+            placeholder: 'assets/ic_logo_disable.jpeg',
           ),
           Container(
             padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),

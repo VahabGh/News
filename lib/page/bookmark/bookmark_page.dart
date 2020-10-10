@@ -83,7 +83,6 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
   }
 
   FutureOr refresh(dynamic value){
-    print("refresh data heree");
     getData();
   }
 
@@ -99,8 +98,6 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
   @override
   void initState() {
     super.initState();
-    print("refresh data heree   iniiiiiiit");
-
     getData();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -115,8 +112,6 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-    print("print state of bookrmark page : $state");
   }
-
 
 }

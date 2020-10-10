@@ -51,6 +51,8 @@ flutter:
   assets:
     - assets/news_place_holder.png
     - assets/loading.gif
+    - assets/ic_logo.jpeg
+    - assets/ic_logo_disable.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

@@ -21,14 +21,12 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
   void getData() async {
     newsItem = ModalRoute.of(context).settings.arguments as NewsItem;
     await database.open();
-    print("news item id -> ${newsItem.id}");
     NewsItem temp = await database.getNewsById(newsItem.id);
     if(!isDataLoaded){
       setState(() {
         isDataLoaded = true;
         isBookmarked = temp != null;
       });
-      print("Is Data Book mark -> $isBookmarked");
     }
 
   }
@@ -84,7 +82,7 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
       children: [
         FadeInImage.assetNetwork(
           image: newsItem.imageUrl,
-          placeholder: 'assets/loading.gif',
+          placeholder: 'assets/ic_logo_disable.jpeg',
         ),
         Container(
           padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),

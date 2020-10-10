@@ -23,11 +23,12 @@ class SplashPageState extends State<SplashPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              Icons.fiber_new,
-              size: 100,
-              color: Colors.indigo,
-            ),
+            // Icon(
+            //   Icons.fiber_new,
+            //   size: 100,
+            //   color: Colors.indigo,
+            // ),
+            Image.asset('assets/ic_logo.jpeg'),
             makeTitle(),
             makeSubtitle()
           ],
@@ -43,7 +44,7 @@ class SplashPageState extends State<SplashPage> {
 
   Text makeTitle() {
     return Text(
-      "خبر",
+      "News",
       style: TextStyle(
           fontSize: 60,
           color: Colors.indigoAccent,
@@ -53,7 +54,7 @@ class SplashPageState extends State<SplashPage> {
 
   Text makeSubtitle() {
     return Text(
-      "پیگیری آخرین اخبار",
+      "Follow breaking news",
       overflow: TextOverflow.visible,
       style: TextStyle(
           fontSize: 30,

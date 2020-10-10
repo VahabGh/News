@@ -13,11 +13,6 @@ class EmptyContentWidget{
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          // Icon(
-          //   Icons.error_outline,
-          //   size: 100,
-          //   color: Colors.blue,
-          // ),
           Image.asset('assets/ic_logo_disable.jpeg'),
           Text(
             message,

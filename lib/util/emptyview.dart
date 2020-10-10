@@ -20,7 +20,7 @@ class EmptyContentWidget{
           ),
           Text(
             message,
-            style: TextStyle(color: Colors.white10, fontSize: 26),
+            style: TextStyle(color: Colors.indigoAccent, fontSize: 26),
             overflow: TextOverflow.visible,
           )
         ],

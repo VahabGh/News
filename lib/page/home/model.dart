@@ -5,12 +5,17 @@ import 'package:news/util/NetworkService.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NewsItem {
+
   NewsItem(this.id, this.title, this.description, this.imageUrl, this.date);
 
   String id = "";
+
   String title = "";
+
   String description = "";
+
   String imageUrl = "";
+
   String date = "";
 
   Map<String, dynamic> toMap() {
@@ -23,13 +28,6 @@ class NewsItem {
     };
   }
 
-  Future<void> bookMark(Database db) async {
-    await db.insert(
-      'news',
-      toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
 }
 
 class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
@@ -51,7 +49,7 @@ class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
               element['description'] != null ? element['description'] : "-";
         }
         String imageUrl =
-            element['urlToImage'] != null ? element['urlToImage'] : "-";
+            element['urlToImage'] != null ? element['urlToImage'] : "";
         String date =
             element['publishedAt'] != null ? element['publishedAt'] : "-";
         newsItems.add(NewsItem(id, title, description, imageUrl, date));

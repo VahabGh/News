@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,8 +13,8 @@ class BookmarkNewsPage extends StatefulWidget {
   _BookmarkNewsPageState createState() => _BookmarkNewsPageState();
 }
 
-
-class _BookmarkNewsPageState extends State<BookmarkNewsPage> {
+class _BookmarkNewsPageState extends State<BookmarkNewsPage>
+    with WidgetsBindingObserver {
   int state = STATE_LOADING;
   String message = "Find your favorite movie :D";
 
@@ -45,19 +46,17 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage> {
   }
 
   void getData() async {
-      startLoading();
-      await newsDatabase.open();
-      news.addAll(await newsDatabase.getAllNews());
-      if(news.length>0)
-        showData();
-      else noData("There is no bookmark news here");
+    startLoading();
+    await newsDatabase.open();
+    news.clear();
+    news.addAll(await newsDatabase.getAllNews());
+    print("news items ---> ${news.length}");
+    if (news.length > 0)
+      showData();
+    else
+      noData("There is no bookmark news here");
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,14 +72,19 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage> {
 
   Widget getBody() {
     if (state == STATE_DATA_LOADED)
-      return NewsListProvider(news,context).provide(onItemClick);
+      return NewsListProvider(news, context).provide(onItemClick);
     else if (state == STATE_LOADING)
       return getLoading();
     else if (state == STATE_NO_DATA) return getNoData();
   }
 
   void onItemClick(NewsItem item) {
-    Navigator.pushNamed(context, '/detail', arguments: item);
+    Navigator.pushNamed(context, '/detail', arguments: item).then(refresh);
+  }
+
+  FutureOr refresh(dynamic value){
+    print("refresh data heree");
+    getData();
   }
 
   Widget getLoading() {
@@ -90,4 +94,29 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage> {
   Widget getNoData() {
     return EmptyContentWidget().get(message);
   }
+
+
+  @override
+  void initState() {
+    super.initState();
+    print("refresh data heree   iniiiiiiit");
+
+    getData();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    print("print state of bookrmark page : $state");
+  }
+
+
 }

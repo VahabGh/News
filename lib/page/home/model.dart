@@ -40,8 +40,8 @@ class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
     if (status == "ok") {
       List<NewsItem> newsItems = new List<NewsItem>();
       List.from(jsonMap['articles']).forEach((element) {
-        String id = DateTime.now().millisecondsSinceEpoch.toString();
         String title = element['title'] != null ? element['title'] : "-";
+        String id = title.hashCode.toString();
 
         String description = "-";
         if (element['content'] != null)

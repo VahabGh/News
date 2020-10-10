@@ -22,7 +22,7 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
   final String API_KEY = "c3fd764371914f109c438b52019049ea";
 
   int state = STATE_LOADING;
-  String message = "Find your favorite movie :D";
+  String message = "";
 
   NewsDatabase newsDatabase = NewsDatabase();
 

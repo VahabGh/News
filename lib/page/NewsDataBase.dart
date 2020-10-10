@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:news/page/home/model.dart';
 import 'package:path/path.dart';
@@ -31,7 +32,6 @@ class NewsDatabase {
     );
   }
 
-  // A method that retrieves all the dogs from the dogs table.
   Future<List<NewsItem>> getAllNews() async {
     final Database db = await database;
     print("query click on object " + db.toString());
@@ -47,7 +47,25 @@ class NewsDatabase {
     });
   }
 
-  Future<void> deleteNews(int id) async {
+  Future<NewsItem> getNewsById(String newsId) async {
+    final Database db = await database;
+    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM $NEWS_TABLE_NAME WHERE id=?",[newsId]);
+    NewsItem foundNewsItem;
+    List.generate(maps.length, (i) {
+      String id = maps[i]['id'];
+      if (newsId == id) {
+        String title = maps[i]['title'];
+        String description = maps[i]['description'];
+        String image = maps[i]['image'];
+        String date = maps[i]['date'];
+        foundNewsItem = NewsItem(id, title, description, image, date);
+      }
+    });
+
+    return foundNewsItem;
+  }
+
+  Future<void> deleteNews(String id) async {
     final db = await database;
     await db.delete(
       NEWS_TABLE_NAME,
@@ -56,7 +74,7 @@ class NewsDatabase {
     );
   }
 
-  Future close() async{
+  Future close() async {
     final Database db = await database;
     db.close();
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
-import 'dart:convert';
+import 'package:news/page/NewsDataBase.dart';
 
 import 'package:news/page/home/model.dart';
 
@@ -13,10 +12,25 @@ class DetailNewsPage extends StatefulWidget {
 class _DetailNewsPageState extends State<DetailNewsPage> {
   bool isDataLoaded = false;
 
-  NewsItem newsItem = NewsItem("-", "-", "-", "-", "-");
+  bool isBookmarked = false;
+
+  NewsItem newsItem = NewsItem("-", "-", "-", "", "-");
+
+  NewsDatabase database = NewsDatabase();
 
   void getData() async {
     newsItem = ModalRoute.of(context).settings.arguments as NewsItem;
+    await database.open();
+    print("news item id -> ${newsItem.id}");
+    NewsItem temp = await database.getNewsById(newsItem.id);
+    if(!isDataLoaded){
+      setState(() {
+        isDataLoaded = true;
+        isBookmarked = temp != null;
+      });
+      print("Is Data Book mark -> $isBookmarked");
+    }
+
   }
 
   @override
@@ -26,9 +40,20 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
       textDirection: TextDirection.ltr,
       child: Scaffold(
           backgroundColor: Colors.white,
-          appBar: AppBar(
-            title: Text(newsItem.title, style: TextStyle(color: Colors.white)),
-          ),
+          appBar: AppBar(actions: [
+            Padding(
+                padding: const EdgeInsets.only(right: 16),
+                child: IconButton(
+                  icon: getBookBarkButton(),
+                  onPressed: () {
+                    if (isBookmarked) {
+                      unBookmarkNews();
+                    } else {
+                      bookmarkNews();
+                    }
+                  },
+                ))
+          ]),
           body: ListView(
             shrinkWrap: true,
             padding: EdgeInsets.all(15.0),
@@ -37,22 +62,34 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
     );
   }
 
+  Widget getBookBarkButton() {
+    if (isBookmarked) {
+      return Icon(
+        Icons.bookmark,
+        color: Colors.white,
+        size: 30.0,
+      );
+    } else {
+      return Icon(
+        Icons.bookmark_border,
+        color: Colors.white,
+        size: 30.0,
+      );
+    }
+  }
+
   List<Widget> getItems() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         FadeInImage.assetNetwork(
           image: newsItem.imageUrl,
-          placeholder: 'assets/news_place_holder.png',
+          placeholder: 'assets/loading.gif',
         ),
         Container(
           padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
           child: Text(
-            newsItem.title +
-                newsItem.title +
-                newsItem.title +
-                newsItem.title +
-                newsItem.title,
+            newsItem.title,
             style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
           ),
         ),
@@ -73,5 +110,19 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
         )
       ],
     ).children;
+  }
+
+  void unBookmarkNews() {
+    database.deleteNews(newsItem.id);
+    setState(() {
+      isBookmarked = false;
+    });
+  }
+
+  void bookmarkNews() {
+    database.insertNews(newsItem);
+    setState(() {
+      isBookmarked = true;
+    });
   }
 }

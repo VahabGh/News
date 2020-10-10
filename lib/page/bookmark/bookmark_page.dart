@@ -44,31 +44,19 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage> {
     });
   }
 
-  void getData(String query) async {
-    if (query.isNotEmpty) {
+  void getData() async {
       startLoading();
-      //
-      // for (var index = 0; index < 15; index++) {
-      //   news.add(NewsItem(
-      //       index.toString(),
-      //       "تلفظ آن در فارسی",
-      //       "صدای آن در عربی و بعضی لهجه‌های فارسی چیزی میان ق و خ است. بر خلاف تصور بسیاری این حرف از حرفهای اصیل فارسی‌است به",
-      //       "https://thumbor.forbes.com/thumbor/fit-in/1200x0/filters%3Aformat%28jpg%29/https%3A%2F%2Fspecials-images.forbesimg.com%2Fimageserve%2F5f7ff72433da3226f47e583e%2F0x0.jpg",
-      //       "20/2/20"));
-      // }
-      newsDatabase.open();
+      await newsDatabase.open();
       news.addAll(await newsDatabase.getAllNews());
-      newsDatabase.close();
-      print(news);
-
-      showData();
-    }
+      if(news.length>0)
+        showData();
+      else noData("There is no bookmark news here");
   }
 
   @override
   void initState() {
     super.initState();
-    getData("batman");
+    getData();
   }
 
   @override
@@ -76,7 +64,7 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("اخبار مورد علاقه", style: TextStyle(color: Colors.white)),
+        title: Text("Bookmark", style: TextStyle(color: Colors.white)),
       ),
       body: getBody(),
       // This trailing comma makes auto-formatting nicer for build methods.

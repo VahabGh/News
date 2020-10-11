@@ -50,7 +50,6 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
     await newsDatabase.open();
     news.clear();
     news.addAll(await newsDatabase.getAllNews());
-    print("news items ---> ${news.length}");
     if (news.length > 0)
       showData();
     else

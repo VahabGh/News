@@ -23,11 +23,6 @@ class SplashPageState extends State<SplashPage> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Icon(
-            //   Icons.fiber_new,
-            //   size: 100,
-            //   color: Colors.indigo,
-            // ),
             Image.asset('assets/ic_logo.jpeg'),
             makeTitle(),
             makeSubtitle()

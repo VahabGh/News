@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class EmptyContentWidget{
 
-  // pass some function here for retry button.
   Widget get(String message){
     return Container(
       alignment: AlignmentDirectional.center,

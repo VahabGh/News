@@ -26,7 +26,7 @@ apply plugin: 'kotlin-android'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
 
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
@@ -43,6 +43,10 @@ android {
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        ndk {
+            abiFilters 'armeabi-v7a', 'x86', 'armeabi'
+        }
     }
 
     buildTypes {
@@ -52,6 +56,8 @@ android {
             signingConfig signingConfigs.debug
         }
     }
+//
+
 }
 
 flutter {

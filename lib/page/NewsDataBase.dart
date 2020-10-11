@@ -34,7 +34,6 @@ class NewsDatabase {
 
   Future<List<NewsItem>> getAllNews() async {
     final Database db = await database;
-    print("query click on object " + db.toString());
 
     final List<Map<String, dynamic>> maps = await db.query(NEWS_TABLE_NAME);
     return List.generate(maps.length, (i) {

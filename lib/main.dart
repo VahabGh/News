@@ -11,17 +11,15 @@ void main() {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       routes: {
-        '/' : (context) => SplashPage(),
-        '/news' : (context) => HomeNewsPage(),
-        '/bookmark' : (context) => BookmarkNewsPage(),
-        '/detail' : (context) => DetailNewsPage(),
+        '/': (context) => SplashPage(),
+        '/news': (context) => HomeNewsPage(),
+        '/bookmark': (context) => BookmarkNewsPage(),
+        '/detail': (context) => DetailNewsPage(),
       },
-
       theme: ThemeData(
         primarySwatch: Colors.indigo,
         visualDensity: VisualDensity.adaptivePlatformDensity,

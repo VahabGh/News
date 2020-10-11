@@ -5,7 +5,6 @@ import 'package:news/util/NetworkService.dart';
 import 'package:sqflite/sqflite.dart';
 
 class NewsItem {
-
   NewsItem(this.id, this.title, this.description, this.imageUrl, this.date);
 
   String id = "";
@@ -27,7 +26,6 @@ class NewsItem {
       'date': date,
     };
   }
-
 }
 
 class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
@@ -53,7 +51,6 @@ class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
         String date =
             element['publishedAt'] != null ? element['publishedAt'] : "-";
         newsItems.add(NewsItem(id, title, description, imageUrl, date));
-
       });
 
       if (newsItems.isNotEmpty)

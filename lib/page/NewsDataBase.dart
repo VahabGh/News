@@ -48,7 +48,8 @@ class NewsDatabase {
 
   Future<NewsItem> getNewsById(String newsId) async {
     final Database db = await database;
-    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM $NEWS_TABLE_NAME WHERE id=?",[newsId]);
+    final List<Map<String, dynamic>> maps = await db
+        .rawQuery("SELECT * FROM $NEWS_TABLE_NAME WHERE id=?", [newsId]);
     NewsItem foundNewsItem;
     List.generate(maps.length, (i) {
       String id = maps[i]['id'];

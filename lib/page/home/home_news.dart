@@ -13,9 +13,7 @@ class HomeNewsPage extends StatefulWidget {
   _HomeNewsPageState createState() => _HomeNewsPageState();
 }
 
-
 class _HomeNewsPageState extends State<HomeNewsPage> {
-
   int state = STATE_LOADING;
 
   String message = "";
@@ -48,20 +46,19 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
   }
 
   void getData() async {
-      startLoading();
-      HomeNewsNetworkService().call(onSuccess,onError);
+    startLoading();
+    HomeNewsNetworkService().call(onSuccess, onError);
   }
 
-  void onSuccess(List<NewsItem> items){
+  void onSuccess(List<NewsItem> items) {
     this.news = items;
     showData();
   }
 
-  void onError(String message){
+  void onError(String message) {
     this.message = message;
     noData(message);
   }
-
 
   @override
   void initState() {
@@ -71,8 +68,7 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return
-      Directionality(
+    return Directionality(
       textDirection: TextDirection.ltr,
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -99,10 +95,9 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
     );
   }
 
-
   Widget getBody() {
     if (state == STATE_DATA_LOADED)
-      return NewsListProvider(news,context).provide(onItemClick);
+      return NewsListProvider(news, context).provide(onItemClick);
     else if (state == STATE_LOADING)
       return getLoading();
     else if (state == STATE_NO_DATA) return getNoData();

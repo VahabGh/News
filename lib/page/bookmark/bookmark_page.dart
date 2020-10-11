@@ -56,7 +56,6 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
       noData("There is no bookmark news here");
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,7 +80,7 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
     Navigator.pushNamed(context, '/detail', arguments: item).then(refresh);
   }
 
-  FutureOr refresh(dynamic value){
+  FutureOr refresh(dynamic value) {
     getData();
   }
 
@@ -93,14 +92,12 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
     return EmptyContentWidget().get(message);
   }
 
-
   @override
   void initState() {
     super.initState();
     getData();
     WidgetsBinding.instance.addObserver(this);
   }
-
 
   @override
   void dispose() {
@@ -112,5 +109,4 @@ class _BookmarkNewsPageState extends State<BookmarkNewsPage>
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
   }
-
 }

@@ -22,13 +22,12 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
     newsItem = ModalRoute.of(context).settings.arguments as NewsItem;
     await database.open();
     NewsItem temp = await database.getNewsById(newsItem.id);
-    if(!isDataLoaded){
+    if (!isDataLoaded) {
       setState(() {
         isDataLoaded = true;
         isBookmarked = temp != null;
       });
     }
-
   }
 
   @override

@@ -16,7 +16,7 @@ class BookmarkNewsPage extends StatefulWidget {
 class _BookmarkNewsPageState extends State<BookmarkNewsPage>
     with WidgetsBindingObserver {
   int state = STATE_LOADING;
-  String message = "Find your favorite movie :D";
+  String message = "";
 
   static const int STATE_LOADING = 0;
   static const int STATE_DATA_LOADED = 1;

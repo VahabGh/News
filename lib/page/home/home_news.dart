@@ -16,11 +16,6 @@ class HomeNewsPage extends StatefulWidget {
 
 class _HomeNewsPageState extends State<HomeNewsPage> {
 
-
-  final String url = "http://newsapi.org/v2/top-headlines?country=us&apiKey=c3fd764371914f109c438b52019049ea";
-
-  final String API_KEY = "c3fd764371914f109c438b52019049ea";
-
   int state = STATE_LOADING;
 
   String message = "";

@@ -1,8 +1,5 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:http/http.dart';
-import 'package:news/page/NewsDataBase.dart';
 import 'package:news/page/home/model.dart';
 import 'package:news/page/news_list.dart';
 import 'package:news/util/emptyview.dart';
@@ -17,8 +14,6 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
   int state = STATE_LOADING;
 
   String message = "";
-
-  NewsDatabase newsDatabase = NewsDatabase();
 
   static const int STATE_LOADING = 0;
   static const int STATE_DATA_LOADED = 1;

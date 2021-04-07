@@ -1,8 +1,6 @@
 import 'dart:convert';
 
-import 'package:http/http.dart';
 import 'package:news/util/NetworkService.dart';
-import 'package:sqflite/sqflite.dart';
 
 class NewsItem {
   NewsItem(this.id, this.title, this.description, this.imageUrl, this.date);

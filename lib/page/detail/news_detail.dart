@@ -25,7 +25,7 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
     if (!isDataLoaded) {
       setState(() {
         isDataLoaded = true;
-        isBookmarked = temp != null;
+        // isBookmarked = temp != null;
       });
     }
   }

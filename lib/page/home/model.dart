@@ -27,6 +27,7 @@ class NewsItem {
 }
 
 class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
+
   @override
   void parseJson(String json) {
     Map jsonMap = jsonDecode(json);
@@ -60,8 +61,47 @@ class HomeNewsNetworkService extends NetworkService<List<NewsItem>> {
     }
   }
 
+
   @override
   String endPoint() {
     return "http://newsapi.org/v2/top-headlines?country=us&apiKey=c3fd764371914f109c438b52019049ea";
+  }
+
+  @override
+  List<NewsItem> getData(String json) {
+
+    if(json.isEmpty)
+      return List.empty();
+
+    Map jsonMap = jsonDecode(json);
+    String status = jsonMap['status'];
+    if (status == "ok") {
+      List<NewsItem> newsItems = [];
+      List.from(jsonMap['articles']).forEach((element) {
+        String title = element['title'] != null ? element['title'] : "-";
+        String id = title.hashCode.toString();
+
+        String description = "-";
+        if (element['content'] != null)
+          description = element['content'];
+        else {
+          description =
+          element['description'] != null ? element['description'] : "-";
+        }
+        String imageUrl =
+        element['urlToImage'] != null ? element['urlToImage'] : "";
+        String date =
+        element['publishedAt'] != null ? element['publishedAt'] : "-";
+        newsItems.add(NewsItem(id, title, description, imageUrl, date));
+      });
+
+      if (newsItems.isNotEmpty)
+        return newsItems;
+      else
+        return List.empty();
+
+    } else {
+      return List.empty();
+    }
   }
 }

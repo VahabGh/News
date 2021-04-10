@@ -21,7 +21,6 @@ class _DetailNewsPageState extends State<DetailNewsPage> {
   void getData() async {
     newsItem = ModalRoute.of(context).settings.arguments as NewsItem;
     await database.open();
-    NewsItem temp = await database.getNewsById(newsItem.id);
     if (!isDataLoaded) {
       setState(() {
         isDataLoaded = true;

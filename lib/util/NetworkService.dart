@@ -17,7 +17,20 @@ abstract class NetworkService<T> {
     }
   }
 
+  Future<T> callDirectly() async {
+    Response response = await get(endPoint());
+
+    if (response.statusCode == 200) {
+      return getData(response.body);
+    } else {
+      return getData("");
+    }
+
+  }
+
   void parseJson(String json);
+
+  T getData(String json);
 
   String endPoint();
 }

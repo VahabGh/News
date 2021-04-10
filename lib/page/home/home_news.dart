@@ -1,6 +1,9 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:news/page/home/model.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news/page/home/news_cubit.dart';
+import 'package:news/page/home/news_state.dart';
 import 'package:news/page/news_list.dart';
 import 'package:news/util/emptyview.dart';
 import 'package:news/util/loading.dart';
@@ -11,55 +14,6 @@ class HomeNewsPage extends StatefulWidget {
 }
 
 class _HomeNewsPageState extends State<HomeNewsPage> {
-  int state = STATE_LOADING;
-
-  String message = "";
-
-  static const int STATE_LOADING = 0;
-  static const int STATE_DATA_LOADED = 1;
-  static const int STATE_NO_DATA = 2;
-
-  void startLoading() {
-    setState(() {
-      state = STATE_LOADING;
-    });
-  }
-
-  List<NewsItem> news = new List<NewsItem>();
-
-  void showData() {
-    setState(() {
-      state = STATE_DATA_LOADED;
-    });
-  }
-
-  void noData(String message) {
-    setState(() {
-      this.message = message;
-      state = STATE_NO_DATA;
-    });
-  }
-
-  void getData() async {
-    startLoading();
-    HomeNewsNetworkService().call(onSuccess, onError);
-  }
-
-  void onSuccess(List<NewsItem> items) {
-    this.news = items;
-    showData();
-  }
-
-  void onError(String message) {
-    this.message = message;
-    noData(message);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getData();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,15 +45,32 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
   }
 
   Widget getBody() {
-    if (state == STATE_DATA_LOADED)
-      return NewsListProvider(news, context).provide(onItemClick);
-    else if (state == STATE_LOADING)
-      return getLoading();
-    else if (state == STATE_NO_DATA) return getNoData();
-  }
 
-  void onItemClick(NewsItem item) {
-    Navigator.pushNamed(context, '/detail', arguments: item);
+    return BlocConsumer<NewsCubit,NewsState>(
+      listener: (context,state) {
+      },
+      // ignore: missing_return
+      builder: (context,state) {
+
+        if(state is NewsInitial) {
+          return getLoading();
+        }
+
+        if(state is NewsLoading) {
+          return getLoading();
+        }
+
+        if(state is NewsLoaded) {
+          return NewsListProvider(state.allNews, context).provide((item) => {
+            Navigator.pushNamed(context, '/detail', arguments: item)
+          });
+        }
+
+        if( state is NewsError) {
+          return getNoData();
+        }
+      },
+    );
   }
 
   Widget getLoading() {
@@ -107,6 +78,6 @@ class _HomeNewsPageState extends State<HomeNewsPage> {
   }
 
   Widget getNoData() {
-    return EmptyContentWidget().get(message);
+    return EmptyContentWidget().get("No data is here");
   }
 }
